@@ -16,54 +16,56 @@ struct Home: View {
         
         ScrollView(.vertical, showsIndicators: false) {
             
-            //MARK: lazy stack with pinned header
+        //MARK: lazy stack with pinned header
             LazyVStack(spacing: 15, pinnedViews: [.sectionHeaders])  {
                 
-                Section {
+            Section {
                     
-                    //MARK: Current Week View
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        
-                        HStack(spacing: 10){
+//MARK: Current Week View
+    ScrollView(.horizontal, showsIndicators: false) {
+                    
+    HStack(spacing: 10){
                             
-                            ForEach(taskModel.currentWeek,id: \.self ){day in
+            ForEach(taskModel.currentWeek,id: \.self ){day in
+                        
+            VStack(spacing: 10){
+                            
+            Text(taskModel.extractDate(date: day, format:"dd"))
+                    .font(.system(size: 15))
+                    .fontWeight(.semibold)
+                                    
+                            // EEE will return day as MON,TUE,....etc
+                    Text(taskModel.extractDate(date: day, format: "EEE"))
+                        .font(.system(size: 14))
                                 
-                                VStack(spacing: 10){
-                                    
-                                    Text(taskModel.extractDate(date: day, format: "dd"))
-                                        .font(.system(size: 15))
-                                        .fontWeight(.semibold)
-                                    
-                                    // EEE will return day as MON,TUE,....etc
-                                    Text(taskModel.extractDate(date: day, format: "EEE"))
-                                        .font(.system(size: 14))
-                                    
-                                    Circle()
-                                        .fill(.white)
-                                        .frame(width: 8, height: 8)
-                                        .opacity(taskModel.isToday(date: day) ? 1 : 0)
+                    Circle()
+                        .fill(.white)
+                        .frame(width: 8, height: 8)
+                        .opacity(taskModel.isToday(date: day) ? 1 : 0)
                                 }
             // MARK: Foreground Style
-                                .foregroundStyle(taskModel.isToday(date: day) ? .primary : .secondary)
-                                .foregroundColor(taskModel.isToday(date: day) ? .white : .black)
-                                // MARK: Capsule Shape
-                                .frame(width: 45, height: 90)
-                                .background(
+                    .foregroundStyle(taskModel.isToday(date: day) ? .primary : .secondary)
+                    .foregroundColor(taskModel.isToday(date: day) ? .white : .black)
+                // MARK: Capsule Shape
+                    .frame(width: 45, height: 90)
+                    .background(
                                 
-                                    ZStack{
-                        // MARK: Matched Geometry Effect
-                                        if taskModel.isToday(date: day){
-                                            Capsule()
-                                                .fill(.black)
-                                                .matchedGeometryEffect(id: "CURRENTDAY", in: animation)
-                                        }
-                                    }
-                                )
-                                .contentShape(Capsule())
-                                .onTapGesture {
-                                    // Updating Current Day
-                                    withAnimation{
-                                        taskModel.currentDay = day
+            ZStack{
+            // MARK: Matched Geometry Effect
+                if taskModel.isToday(date: day){
+                    Capsule()
+                    .fill(Color(red: 0.001, green: 0.291, blue: 0.679))
+                    .matchedGeometryEffect(id: "CURRENTDAY", in: animation)
+                    
+
+                            }
+                        }
+                    )
+                .contentShape(Capsule())
+                .onTapGesture {
+                // Updating Current Day
+                withAnimation{
+                    taskModel.currentDay = day
                                     }
                                 }
                             }
@@ -92,6 +94,7 @@ struct Home: View {
                     Text("No tasks found!!!")
                         .font(.system(size: 16))
                         .fontWeight(.light)
+                        .foregroundColor(Color(red: 0.16, green: 0.165, blue: 0.186))
                         .offset(y: 100)
                 }
                 else{
@@ -196,7 +199,7 @@ struct Home: View {
             .padding(.bottom,taskModel.isCurrentHour(date: task.taskDate) ? 0 : 10)
             .hLeading()
             .background(
-                Color("Black")
+                Color("Blue")
                     .cornerRadius(25)
                     .opacity(taskModel.isCurrentHour(date: task.taskDate) ? 1 : 0)
             )
@@ -216,6 +219,7 @@ struct Home: View {
                 
                 Text("Today")
                     .font(.largeTitle.bold())
+                    .foregroundColor(Color(hue: 0.595, saturation: 0.401, brightness: 0.456))
             }
             .hLeading()
             

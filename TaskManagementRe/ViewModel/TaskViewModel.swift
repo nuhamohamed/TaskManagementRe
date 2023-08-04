@@ -38,17 +38,17 @@ class TaskViewModel: ObservableObject{
         filterTodayTasks()
     }
     
-    // MARK: Filter Today Tasks
-    func filterTodayTasks(){
+// MARK: Filter Today Tasks
+func filterTodayTasks(){
         
-        DispatchQueue.global(qos: .userInteractive).async {
+    DispatchQueue.global(qos: .userInteractive).async {
             
-            let calendar = Calendar.current
-            
+        let calendar = Calendar.current
+        
             let filtered = self.storedTasks.filter{
-                return calendar.isDate($0.taskDate, inSameDayAs: self.currentDay)
+            return calendar.isDate($0.taskDate, inSameDayAs: self.currentDay)
             }
-                .sorted { task1, task2 in
+        .sorted { task1, task2 in
                     return task2.taskDate < task1.taskDate
                 }
             
@@ -63,6 +63,7 @@ class TaskViewModel: ObservableObject{
     func fetchCurrentWeek(){
         
         let today = Date()
+        
         let calendar = Calendar.current
         
         let week = calendar.dateInterval(of: .weekOfMonth, for: today)
@@ -79,7 +80,7 @@ class TaskViewModel: ObservableObject{
         }
     }
     
-    // MARK: Extracting Date
+// MARK: Extracting Date
     func extractDate(date: Date,format: String)->String{
         let formatter = DateFormatter()
         
@@ -88,15 +89,15 @@ class TaskViewModel: ObservableObject{
         return formatter.string(from: date)
     }
     
-    // MARK: Checking if current Date is Today
+// MARK: Checking if current Date is Today
     func isToday(date: Date)->Bool{
         
         let calendar = Calendar.current
         
         return calendar.isDate(currentDay, inSameDayAs: date)
     }
-    
-    // MARK: Checking if the currentHour is task Hour
+
+// MARK: Checking if the currentHour is task Hour
     func isCurrentHour(date: Date)->Bool{
         
         let calendar = Calendar.current
