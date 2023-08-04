@@ -5,9 +5,10 @@
 //  Created by Nuha Mohamed on 8/3/23.
 //
 
+
 import SwiftUI
 
-//Task Model
+// Task Model
 struct Task: Identifiable{
     var id = UUID().uuidString
     var taskTitle: String
